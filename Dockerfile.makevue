@@ -1,0 +1,13 @@
+FROM node:9.11.1-alpine
+
+RUN npm install -g http-server
+
+WORKDIR '/veus-frontend'
+
+COPY ./veus-frontend/package*.json ./
+
+RUN npm install
+
+COPY ./veus-frontend ./
+
+CMD [ "npm", "npm", "serve" ]
