@@ -1,0 +1,10 @@
+FROM node:alpine
+
+WORKDIR '/veus-frontend'
+
+COPY ./veus-frontend/package*.json ./
+RUN npm install
+
+COPY ./veus-frontend .
+
+CMD ["npm", "run", "start"]

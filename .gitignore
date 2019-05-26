@@ -1,0 +1,12 @@
+.idea
+/veus-backend/node_modules
+/veus-backend/public/hot
+/veus-backend/public/storage
+/veus-backend/storage/*.key
+/veus-backend/vendor
+/veus-backend.phpunit.result.cache
+/veus-backend/Homestead.json
+/veus-backend/Homestead.yaml
+/veus-backend/npm-debug.log
+/veus-backend/yarn-error.log
+/veus-frontend/node_modules

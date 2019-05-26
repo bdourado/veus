@@ -1,0 +1,61 @@
+version: "3.3"
+
+services:
+    nginx:
+        container_name: nginx_bdourado_veus
+        restart: unless-stopped
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./veus-backend:/veus-backend
+            - ./default.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - php
+        networks:
+            - veusnet
+    php:
+        container_name: php_bdourado_veus
+        restart: unless-stopped
+        build: 
+            context: .
+            dockerfile: Dockerfile.makephp
+        working_dir: /veus-backend
+        volumes:
+            - ./veus-backend:/veus-backend
+        links:
+            - mysqldb
+        depends_on:
+            - mysqldb
+        networks:
+            - veusnet
+    mysqldb:
+        image: mysql:5.7
+        container_name: db_bdourado_veus
+        restart: unless-stopped
+        environment:
+            - MYSQL_DATABASE=veus
+            - MYSQL_ROOT_PASSWORD=rootpassword
+            - MYSQL_USER=veus_user
+            - MYSQL_PASSWORD=secret
+        ports:
+            - "3306:3306"
+        networks:
+            - veusnet
+    web:
+        container_name: "react_bdourado_veus"
+        restart: unless-stopped
+        build: 
+            context: .
+            dockerfile: Dockerfile.makereact
+        ports: 
+            - "3000:3000"
+        volumes:
+            - /veus-frontend/node_modules
+            - ./veus-frontend:/veus-frontend
+        networks:
+            - veusnet
+    
+networks:
+    veusnet:
+        driver: bridge
