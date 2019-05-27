@@ -1,10 +1,15 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <!--<div id="nav">
       <router-link to="/">login</router-link> | 
       <router-link to="/signup">Criar conta</router-link>    
+    </div>-->
+  
+    <div class="container-fluid">
+
+      <router-view/>
+
     </div>
-    <router-view/>
   </div>
 </template>
 
@@ -12,23 +17,18 @@
 <script>
 import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
+import Produtos from './views/Produtos.vue'
+import NovoProduto from './views/NovoProduto.vue'
+import Title from './components/title.vue'
 
 export default {
   name: 'app',
   components: {
     Login,
-    Signup
+    Signup,
+    Produtos,
+    NovoProduto,
+    Title
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

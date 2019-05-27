@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::group([
-    'middleware' => ['cors','api'],
+    'middleware' => ['api',\Barryvdh\Cors\HandleCors::class],
     'prefix' => 'v1/auth'
 ], function ($router) {
     Route::post('login', 'AuthController@login')->name('login');
@@ -23,7 +23,7 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
 });
 
-Route::group(['middleware' => ['cors','jwt.auth']], function() {
+Route::group(['middleware' => [\Barryvdh\Cors\HandleCors::class,'jwt.auth']], function() {
     Route::resource('v1/products', 'ProdutosController');
 });
 

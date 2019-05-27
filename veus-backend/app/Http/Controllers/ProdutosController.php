@@ -17,7 +17,7 @@ class ProdutosController extends Controller
         $busca = $request->query('busca');
         $filtro = $request->query('filtro');
 
-        $itensPorPagina = 2;
+        $itensPorPagina = 10;
 
         if (!empty($busca) and empty($filtro)) {
 
@@ -43,7 +43,6 @@ class ProdutosController extends Controller
                 ->paginate($itensPorPagina);
 
         }else{
-            echo 4;
             $produtos = Produtos::paginate($itensPorPagina);
         }
 

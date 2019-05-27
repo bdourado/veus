@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Signup Page</h2>
-    <form @submit="register">
+    <form @submit="signup">
       <div>
           <input  type="text" placeholder="Name" v-model="name">
       </div>
