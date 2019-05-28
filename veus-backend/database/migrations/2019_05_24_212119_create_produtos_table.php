@@ -13,10 +13,17 @@ class CreateProdutosTable extends Migration
      */
     public function up()
     {
+        Schema::create('marcas', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nome');
+            $table->timestamps();
+        });
+
         Schema::create('produtos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('marca');
+            $table->integer('marca')->unsigned()->nullable();
+            $table->foreign('marca')->references('id')->on('marcas');
             $table->double('preco',8,2);
             $table->integer('qtde');
             $table->timestamps();
@@ -31,5 +38,6 @@ class CreateProdutosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('produtos');
+        Schema::dropIfExists('marcas');
     }
 }

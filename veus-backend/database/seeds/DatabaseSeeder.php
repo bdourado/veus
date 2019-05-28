@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => $now,
             'updated_at' => $now
         ]);
+
         for ($i = 0; $i < 30; $i++){
             DB::table('produtos')->insert([
                 'nome' => 'produto_'.$i,

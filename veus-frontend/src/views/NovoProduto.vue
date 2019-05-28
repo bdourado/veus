@@ -47,9 +47,7 @@
 
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col">
-                                        <input type="reset" v-on:click="goToProdutos()" class="btn btn-secondary" value="Voltar">
-                                    </div>
+
                                     <div class="col">
                                         <input type="button" v-on:click="cadastrar()" class="btn btn-primary float-right" value="Cadastrar">
                                     </div>
@@ -83,6 +81,13 @@
                 qtde: 0,
                 preco: ""
             }
+        },
+        watch:{
+            qtde () {
+                if (this.qtde < 0) {
+                    this.qtde = 0;
+                }
+            },
         },
         methods: {
             cadastrar(){

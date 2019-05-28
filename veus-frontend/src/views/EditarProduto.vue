@@ -1,6 +1,20 @@
 <template>
     <div>
-        <Title title="Editar produto" color="text-light"></Title>
+        <Title title="Produtos" color="text-light"></Title>
+
+        <div class="tabs-pills">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <router-link to="/produtos"><a class="nav-link">Produtos</a></router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/novo-produto"><a class="nav-link">Cadastrar novo produto</a></router-link>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active">Editar produto</a>
+                </li>
+            </ul>
+        </div>
 
         <div class="edit-form">
             <div class="row">
@@ -38,9 +52,6 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
                                     <div class="col">
-                                        <input type="reset" v-on:click="goToProdutos()" class="btn btn-secondary" value="Voltar">
-                                    </div>
-                                    <div class="col">
                                         <input type="button" v-on:click="alterar()" class="btn btn-primary float-right" value="Alterar">
                                     </div>
                                 </div>
@@ -73,6 +84,13 @@
                 qtde: 0,
                 preco: 0
             }
+        },
+        watch:{
+            qtde () {
+                if (this.qtde < 0) {
+                    this.qtde = 0;
+                }
+            },
         },
         methods: {
             getProduct(){
@@ -127,7 +145,10 @@
 </script>
 
 <style>
+    .tabs-pills{
+        margin-top: 100px;
+    }
     .edit-form{
-        margin: 100px 0 30px;
+        margin: 30px 0 30px;
     }
 </style>
