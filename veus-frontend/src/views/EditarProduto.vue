@@ -1,18 +1,8 @@
 <template>
     <div>
-        <Title title="Produtos" color="text-light"></Title>
-        <div class="tabs-pills">
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <router-link to="/produtos"><a class="nav-link">Produtos</a></router-link>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active">Cadastrar novo produto</a>
-                </li>
-            </ul>
-        </div>
+        <Title title="Editar produto" color="text-light"></Title>
 
-        <div class="create-form">
+        <div class="edit-form">
             <div class="row">
                 <div class="col">
                     <!-- form user info -->
@@ -51,7 +41,7 @@
                                         <input type="reset" v-on:click="goToProdutos()" class="btn btn-secondary" value="Voltar">
                                     </div>
                                     <div class="col">
-                                        <input type="button" v-on:click="cadastrar()" class="btn btn-primary float-right" value="Cadastrar">
+                                        <input type="button" v-on:click="alterar()" class="btn btn-primary float-right" value="Alterar">
                                     </div>
                                 </div>
                             </form>
@@ -63,7 +53,6 @@
         </div>
 
     </div>
-
 </template>
 
 <script>
@@ -72,22 +61,44 @@
     import {HTTP} from '../js/domain'
 
     export default {
-        name: 'NovoProduto',
+        name: 'EditarProduto',
         components: {
-            Title
+            Title,
         },
         data(){
             return {
-                nome : "",
-                marca : "",
+                id: this.$route.params.id,
+                nome: '',
+                marca: '',
                 qtde: 0,
-                preco: ""
+                preco: 0
             }
         },
         methods: {
-            cadastrar(){
+            getProduct(){
+                let id = this.id
                 HTTP
-                    .post('api/v1/products',{
+                    .get('api/v1/products/'+id+'/edit')
+                    .then(response => {
+                        this.nome = response.data.nome
+                        this.marca = response.data.marca
+                        this.qtde = response.data.qtde
+                        this.preco = this.formatPrice(response.data.preco)
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            },
+            formatPrice(value) {
+                const val = Number(value.toString().replace(",", "."));
+                if (!val) return '0,00';
+                const valueString = val.toFixed(2).replace(".", ",");
+                return valueString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            },
+            alterar(){
+                let id = this.id
+                HTTP
+                    .put('api/v1/products/'+id,{
                         nome: this.nome,
                         marca: this.marca,
                         qtde: this.qtde,
@@ -105,16 +116,18 @@
             },
             enterPressed: function(e)
             {
+
                 if(e) e.preventDefault();
             }
+        },
+        mounted() {
+            this.getProduct()
         }
     }
 </script>
+
 <style>
-    .tabs-pills{
-        margin-top: 100px;
-    }
-    .create-form {
-        margin: 30px 0 30px;
+    .edit-form{
+        margin: 100px 0 30px;
     }
 </style>

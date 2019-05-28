@@ -1,25 +1,23 @@
 import  Vue  from  'vue'
 import  Router  from  'vue-router'
-import  Signup  from  './views/Signup.vue'
 import  Login  from  './views/Login.vue'
 import  Produtos  from  './views/Produtos.vue'
 import  NovoProduto  from  './views/NovoProduto.vue'
+import  EditarProduto  from  './views/EditarProduto.vue'
 
 Vue.use(Router)
 
 export  default  new  Router({
     mode:  'history',
-    base:  process.env.BASE_URL,
     routes: [
     {
         path:  '/',
-        name:  'Login',
-        component:  Login
+        redirect: {name: 'Login'}
     },
     {
-        path:  '/signup',
-        name:  'signup',
-        component:  Signup
+        path:  '/login',
+        name:  'Login',
+        component:  Login
     },
     {
         path:  '/produtos',
@@ -28,8 +26,13 @@ export  default  new  Router({
     },
     {
         path:  '/novo-produto',
-        name:  'novo produto',
+        name:  'novoProduto',
         component:  NovoProduto
+    },
+    {
+        path:  '/produto/editar/:id',
+        name:  'editarProduto',
+        component:  EditarProduto
     }
     ]
 })

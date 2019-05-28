@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col-md-9 col-lg-8 mx-auto">
               <h3 class="login-heading mb-4"></h3>
-              
+
                 <div class="form-label-group">
                   <input type="email" id="inputEmail" class="form-control" v-model="email" placeholder="Email address" required autofocus>
                   <label for="inputEmail">Email address</label>
@@ -18,8 +18,8 @@
                   <input type="password" id="inputPassword" class="form-control" v-model="password" placeholder="Password" required>
                   <label for="inputPassword">Password</label>
                 </div>
-                <button  v-on:click="login()" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Sign in</button>
-             
+                <button  v-on:click="login()" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Login</button>
+
             </div>
           </div>
         </div>
@@ -49,30 +49,13 @@ export default {
         email: email,
         password: password
       })
-      .then(data => {
-        console.log(data)
+      .then(response => {
+        localStorage.setItem('token',response.data.access_token);
+        location.replace('/produtos')
       })
       .catch(function (error) {
         console.log(error)
       })
-
-      /*$.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: "http://localhost:8888/api/v1/auth/login",
-        data: {
-          email: this.email,
-          password: this.password
-        },
-        success: function (response) {
-          //localStorage.setItem('token','Bearer '+ response.access_token);
-          localStorage.setItem('token',response.access_token);
-          location.replace('/produtos')
-        },
-        error: function(error){
-          console.log(error.statusText);
-        }
-      });*/
     }
   }
 }
@@ -90,7 +73,7 @@ export default {
 }
 
 .bg-image {
-  background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+  background-image: url('../assets/bg.jpeg');
   background-size: cover;
   background-position: center;
 }

@@ -14,17 +14,17 @@ class ProdutosController extends Controller
      */
     public function index(Request $request)
     {
-        $busca = $request->query('busca');
-        $filtro = $request->query('filtro');
+        $busca = $request->query('q');
+        $filtro = $request->query('filter');
 
         $itensPorPagina = 10;
 
         if (!empty($busca) and empty($filtro)) {
 
-            $produtos = Produtos::where('nome', $busca)
-                ->orWhere('marca',$busca)
-                ->orWhere('qtde',$busca)
-                ->orWhere('preco',$busca)
+            $produtos = Produtos::where('nome', 'like', '%' .  $busca. '%')
+                ->orWhere('marca',  'like', '%' . $busca. '%')
+                ->orWhere('qtde', 'like', '%' . $busca. '%')
+                ->orWhere('preco', 'like', '%' . $busca. '%')
                 ->orderBy('id', 'asc')
                 ->paginate($itensPorPagina);
 
@@ -35,10 +35,10 @@ class ProdutosController extends Controller
 
         }else if(!empty($busca) and !empty($filtro)){
 
-            $produtos = Produtos::where('nome', $busca)
-                ->orWhere('marca',$busca)
-                ->orWhere('qtde',$busca)
-                ->orWhere('preco',$busca)
+            $produtos = Produtos::where('nome', 'like', '%' . $busca. '%')
+                ->orWhere('marca', 'like', '%' . $busca. '%')
+                ->orWhere('qtde', 'like', '%' . $busca. '%')
+                ->orWhere('preco', 'like', '%' . $busca. '%')
                 ->orderBy($filtro, 'asc')
                 ->paginate($itensPorPagina);
 
@@ -80,9 +80,10 @@ class ProdutosController extends Controller
      * @param  \App\Produtos  $produtos
      * @return \Illuminate\Http\Response
      */
-    public function show(Produtos $produtos)
+    public function show($product,Produtos $produtos)
     {
-        //
+        $produto = $produtos->find($product);
+        return response()->json($produto);
     }
 
     /**
@@ -91,9 +92,10 @@ class ProdutosController extends Controller
      * @param  \App\Produtos  $produtos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produtos $produtos)
+    public function edit($product, Produtos $produtos)
     {
-        //
+        $produto = $produtos->find($product);
+        return response()->json($produto);
     }
 
     /**
