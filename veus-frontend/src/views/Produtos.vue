@@ -22,11 +22,8 @@
           </div>
           <div class="col-sm-3 my-1">
             <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="filter">
-              <option value="0">Ordenar...</option>
-              <option value="nome">Nome</option>
-              <option value="marca">Marca</option>
-              <option value="qtde">Qtde</option>
-              <option value="preco">Preço</option>
+              <option value="0">Filtrar por marcas...</option>
+              <option v-for="item in listamarcas" :value="item.nome">{{ item.nome }}</option>
             </select>
           </div>
           <div class="col-auto my-1">
@@ -87,6 +84,7 @@ export default {
   },
   data(){
     return {
+      listamarcas: [],
       listaprodutos: [],
       searchword: '',
       filter: '0',
@@ -116,9 +114,30 @@ export default {
     },
   },
   methods: {
+    getMarcas(){
+      HTTP.get('api/v1/marcas')
+              .then(response => {
+                this.getProdutos()
+                  Vue.set(this, 'listamarcas', response.data)
+              })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     getProdutos: function (page = 1, searchword = "", filter = "") {
+
+      var url = 'api/v1/products?page='+page;
+
+      if (searchword.length > 0) {
+        url += '&q='+searchword
+      }
+
+      if (filter.length > 0 && filter != 0) {
+        url += '&filter=brand:'+filter
+      }
+
       HTTP
-      .get('api/v1/products?page='+page+'&q='+searchword+"&filter="+filter)
+      .get(url)
       .then(response => {
         
         this.currentPage = response.data.current_page
@@ -161,7 +180,7 @@ export default {
     }
   },
   mounted () {
-    this.getProdutos();
+    this.getMarcas();
   }
 }
 </script>

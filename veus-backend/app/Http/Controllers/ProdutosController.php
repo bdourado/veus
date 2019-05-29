@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Produtos;
+use App\Services\FiltrarStringServices;
 use Illuminate\Http\Request;
 
 class ProdutosController extends Controller
@@ -19,32 +20,28 @@ class ProdutosController extends Controller
 
         $itensPorPagina = 10;
 
-        if (!empty($busca) and empty($filtro)) {
+        if (!empty($filtro)) {
+            $filtrarStringServices = new FiltrarStringServices($filtro);
 
-            $produtos = Produtos::where('nome', 'like', '%' .  $busca. '%')
-                ->orWhere('marca',  'like', '%' . $busca. '%')
-                ->orWhere('qtde', 'like', '%' . $busca. '%')
-                ->orWhere('preco', 'like', '%' . $busca. '%')
+            $campo = $filtrarStringServices->getCampo();
+            $valor = $filtrarStringServices->getValor();
+
+            $produtos = Produtos::select('produtos.*', 'marcas.nome as marca')
+                ->join('marcas', 'produtos.marca_id', '=', 'marcas.id')
+                ->where('produtos.nome', 'like', '%' .  $busca. '%')
+                ->where($campo.'.nome', $valor)
                 ->orderBy('id', 'asc')
                 ->paginate($itensPorPagina);
 
-        }else if(empty($busca) and !empty($filtro)){
-
-            $produtos = Produtos::orderBy($filtro, 'asc')
-                ->paginate(10);
-
-        }else if(!empty($busca) and !empty($filtro)){
-
-            $produtos = Produtos::where('nome', 'like', '%' . $busca. '%')
-                ->orWhere('marca', 'like', '%' . $busca. '%')
-                ->orWhere('qtde', 'like', '%' . $busca. '%')
-                ->orWhere('preco', 'like', '%' . $busca. '%')
-                ->orderBy($filtro, 'asc')
-                ->paginate($itensPorPagina);
-
-        }else{
-            $produtos = Produtos::paginate($itensPorPagina);
+            return response()->json($produtos, 200);
         }
+
+
+        $produtos = Produtos::select('produtos.*', 'marcas.nome as marca')
+            ->join('marcas', 'produtos.marca_id', '=', 'marcas.id')
+            ->where('produtos.nome', 'like', '%' .  $busca. '%')
+            ->orderBy('id', 'asc')
+            ->paginate($itensPorPagina);
 
         return response()->json($produtos, 200);
     }

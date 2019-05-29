@@ -25,5 +25,6 @@ Route::group([
 
 Route::group(['middleware' => [\Barryvdh\Cors\HandleCors::class,'jwt.auth']], function() {
     Route::resource('v1/products', 'ProdutosController');
+    Route::get('v1/marcas','MarcasController@index');
 });
 

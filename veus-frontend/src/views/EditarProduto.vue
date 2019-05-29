@@ -33,7 +33,10 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Marca</label>
                                     <div class="col-lg-9">
-                                        <input v-on:keydown.enter.prevent='enterPressed' class="form-control" type="text" v-model="marca">
+                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="marca">
+                                            <option value="0">Selecione uma marca...</option>
+                                            <option v-for="item in listamarcas" :value="item.id">{{ item.nome }}</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -80,9 +83,10 @@
             return {
                 id: this.$route.params.id,
                 nome: '',
-                marca: '',
+                marca: 0,
                 qtde: 0,
-                preco: 0
+                preco: 0,
+                listamarcas: []
             }
         },
         watch:{
@@ -93,13 +97,23 @@
             },
         },
         methods: {
+            getMarcas(){
+                HTTP.get('api/v1/marcas')
+                    .then(response => {
+                        Vue.set(this, 'listamarcas', response.data)
+                        this.getProduct()
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            },
             getProduct(){
                 let id = this.id
                 HTTP
                     .get('api/v1/products/'+id+'/edit')
                     .then(response => {
                         this.nome = response.data.nome
-                        this.marca = response.data.marca
+                        this.marca = response.data.marca_id
                         this.qtde = response.data.qtde
                         this.preco = this.formatPrice(response.data.preco)
                     })
@@ -115,10 +129,11 @@
             },
             alterar(){
                 let id = this.id
+
                 HTTP
                     .put('api/v1/products/'+id,{
                         nome: this.nome,
-                        marca: this.marca,
+                        marca_id: this.marca,
                         qtde: this.qtde,
                         preco: this.preco.replace(',','.')
                     })
@@ -139,7 +154,7 @@
             }
         },
         mounted() {
-            this.getProduct()
+            this.getMarcas()
         }
     }
 </script>

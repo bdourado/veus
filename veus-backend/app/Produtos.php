@@ -12,6 +12,11 @@ class Produtos extends Model
      * @var array
      */
     protected $fillable = [
-        'nome', 'marca', 'preco', 'qtde'
+        'nome', 'marca_id', 'preco', 'qtde'
     ];
+
+    public function marcas()
+    {
+        return $this->belongsToMany(Marcas::class);
+    }
 }
