@@ -23,15 +23,18 @@ class DatabaseSeeder extends Seeder
             'updated_at' => $now
         ]);
 
-        for ($i = 0; $i < 30; $i++){
-            DB::table('produtos')->insert([
-                'nome' => 'produto_'.$i,
-                'marca' => 'marca_'.$i,
-                'preco' => rand(10,99).'.'.rand(10,99),
-                'qtde' => rand(1,99),
-                'created_at' => $now,
-                'updated_at' => $now
-            ]);
+        for ($int = 1; $int < 5; $int++){
+            DB::table('marcas')->insert(['nome'=>'marca '.$int]);
+            for ($i = 0; $i < 10; $i++){
+                DB::table('produtos')->insert([
+                    'nome' => 'produto_'.$i,
+                    'marca_id' => $int,
+                    'preco' => rand(10,99).'.'.rand(10,99),
+                    'qtde' => rand(1,99),
+                    'created_at' => $now,
+                    'updated_at' => $now
+                ]);
+            }
         }
 
     }
