@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         for ($int = 1; $int < 5; $int++){
             DB::table('marcas')->insert(['nome'=>'marca '.$int,'created_at' => $now,'updated_at' => $now]);
-            for ($i = 0; $i < 10; $i++){
+            for ($i = 0; $i < 25; $i++){
                 DB::table('produtos')->insert([
                     'nome' => 'produto_'.$i,
                     'marca_id' => $int,

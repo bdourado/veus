@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Produtos;
-use App\Services\FiltrarStringServices;
+use App\Classes\FiltrarStringClass;
 use Illuminate\Http\Request;
 
 class ProdutosController extends Controller
@@ -21,10 +21,10 @@ class ProdutosController extends Controller
         $itensPorPagina = 10;
 
         if (!empty($filtro)) {
-            $filtrarStringServices = new FiltrarStringServices($filtro);
+            $filtrarStringClass = new FiltrarStringClass($filtro);
 
-            $campo = $filtrarStringServices->getCampo();
-            $valor = $filtrarStringServices->getValor();
+            $campo = $filtrarStringClass->getCampo();
+            $valor = $filtrarStringClass->getValor();
 
             $produtos = Produtos::select('produtos.*', 'marcas.nome as marca')
                 ->join('marcas', 'produtos.marca_id', '=', 'marcas.id')
