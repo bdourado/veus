@@ -26,4 +26,4 @@ RUN sudo chmod -R 777 storage
 
 RUN php artisan optimize
 
-#RUN php artisan migrate --seed
+RUN php artisan migrate --seed

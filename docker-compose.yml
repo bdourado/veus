@@ -20,9 +20,9 @@ services:
         build: 
             context: .
             dockerfile: Dockerfile.makephp
-        working_dir: /veus-backend
-        volumes:
-            - ./veus-backend:/veus-backend
+        #working_dir: /veus-backend
+        #volumes:
+        #    - ./veus-backend:/veus-backend
         links:
             - mysqldb
         depends_on:
