@@ -25,5 +25,3 @@ RUN composer install --prefer-source --no-interaction
 RUN sudo chmod -R 777 storage
 
 RUN php artisan optimize
-
-RUN php artisan migrate --seed
