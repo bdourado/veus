@@ -23,7 +23,6 @@ services:
         working_dir: /veus-backend
         volumes:
             - ./veus-backend:/veus-backend
-        command: sh -c "sudo chmod -R 777 storage"
         links:
             - mysqldb
         depends_on:
