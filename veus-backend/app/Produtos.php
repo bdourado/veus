@@ -12,7 +12,7 @@ class Produtos extends Model
      * @var array
      */
     protected $fillable = [
-        'nome', 'marca_id', 'preco', 'qtde'
+        'nome', 'marcas_id', 'preco', 'qtde'
     ];
 
     public function marcas()

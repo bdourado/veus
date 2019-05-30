@@ -27,7 +27,7 @@ class ProdutosController extends Controller
             $valor = $filtrarStringClass->getValor();
 
             $produtos = Produtos::select('produtos.*', 'marcas.nome as marca')
-                ->join('marcas', 'produtos.marca_id', '=', 'marcas.id')
+                ->join('marcas', 'produtos.marcas_id', '=', 'marcas.id')
                 ->where('produtos.nome', 'like', '%' .  $busca. '%')
                 ->where($campo.'.nome', $valor)
                 ->orderBy('id', 'asc')
@@ -38,7 +38,7 @@ class ProdutosController extends Controller
 
 
         $produtos = Produtos::select('produtos.*', 'marcas.nome as marca')
-            ->join('marcas', 'produtos.marca_id', '=', 'marcas.id')
+            ->join('marcas', 'produtos.marcas_id', '=', 'marcas.id')
             ->where('produtos.nome', 'like', '%' .  $busca. '%')
             ->orderBy('id', 'asc')
             ->paginate($itensPorPagina);

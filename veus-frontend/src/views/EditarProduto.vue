@@ -113,7 +113,7 @@
                     .get('api/v1/products/'+id+'/edit')
                     .then(response => {
                         this.nome = response.data.nome
-                        this.marca = response.data.marca_id
+                        this.marca = response.data.marcas_id
                         this.qtde = response.data.qtde
                         this.preco = this.formatPrice(response.data.preco)
                     })
@@ -133,7 +133,7 @@
                 HTTP
                     .put('api/v1/products/'+id,{
                         nome: this.nome,
-                        marca_id: this.marca,
+                        marcas_id: this.marca,
                         qtde: this.qtde,
                         preco: this.preco.replace(',','.')
                     })

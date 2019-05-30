@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Faker\Generator;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,19 +24,12 @@ class DatabaseSeeder extends Seeder
             'updated_at' => $now
         ]);
 
-        for ($int = 1; $int < 5; $int++){
-            DB::table('marcas')->insert(['nome'=>'marca '.$int,'created_at' => $now,'updated_at' => $now]);
-            for ($i = 0; $i < 25; $i++){
-                DB::table('produtos')->insert([
-                    'nome' => 'produto_'.$i,
-                    'marca_id' => $int,
-                    'preco' => rand(10,99).'.'.rand(10,99),
-                    'qtde' => rand(1,99),
-                    'created_at' => $now,
-                    'updated_at' => $now
-                ]);
-            }
-        }
+        $produtos = factory(\App\Produtos::class,100)->create();
+
+
+
+
+
 
     }
 }

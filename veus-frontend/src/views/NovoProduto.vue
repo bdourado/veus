@@ -107,7 +107,7 @@
                 HTTP
                     .post('api/v1/products',{
                         nome: this.nome,
-                        marca_id: this.marca,
+                        marcas_id: this.marca,
                         qtde: this.qtde,
                         preco: this.preco.replace(',','.')
                     })
