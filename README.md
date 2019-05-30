@@ -28,4 +28,20 @@ docker exec -it php_bdourado_veus php artisan migrate --seed
 Após realizar a "migration" basta acessar http://localhost:3001.
 
 Login: admin@email.com
+
 Senha: secret
+
+API:
+
+Login:
+Método: POST 
+email: 'admin@email.com'
+password: 'secret'
+url:: http://localhost:8888/api/v1/auth/login
+
+Listar todos os produtos (já vem paginado):
+Método: GET
+Aythorization Bearer Token: Token gerado pelo login
+Query string: q & filter
+url sem query string: http://localhost:8888/api/v1/products
+url com query string: http://localhost:8888/api/v1/products?&q=consequatur&filter=brand:quam
