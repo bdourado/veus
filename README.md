@@ -34,14 +34,25 @@ Senha: secret
 API:
 
 Login:
+
 Método: POST 
+
 email: 'admin@email.com'
+
 password: 'secret'
+
 url:: http://localhost:8888/api/v1/auth/login
 
+
 Listar todos os produtos (já vem paginado):
+
 Método: GET
+
 Aythorization Bearer Token: Token gerado pelo login
+
 Query string: q & filter
+
 url sem query string: http://localhost:8888/api/v1/products
+
 url com query string: http://localhost:8888/api/v1/products?&q=consequatur&filter=brand:quam
+
