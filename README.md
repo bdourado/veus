@@ -12,7 +12,14 @@ Para rodar o projeto, basta seguir os passos:
 git clone git@github.com:bdourado/veus.git
 ```
 
-Após fazer o download do projeto, entrar na pasta Veus e rodar os seguinte comandos:
+Após fazer o download do projeto, entrar na pasta Veus:
+
+```bash
+cd veus
+```
+
+Após entrar na pasta, rodar o seguinte comando para subir os containers Docker:
+
 
 ```bash
 docker-compose up -d
